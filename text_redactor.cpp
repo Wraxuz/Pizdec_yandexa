@@ -17,7 +17,7 @@ public:
             --it;
             --cursor;
         }
-        cout << *it << endl;
+        //cout << *it << endl;
     }
 
     void Right() {
@@ -39,12 +39,11 @@ public:
             text.insert(it--, token);
         }
         ++cursor;
-        cout << cursor << endl;
+        //cout << cursor << endl;
         
     }
 
     void Cut(size_t tokens = 1) {
-        cout << *it << endl;
         list<char>::iterator ne = it;
         buffer.clear();
         if (cursor + tokens < text.size()){
@@ -67,13 +66,15 @@ public:
         buffer.clear();
         if (cursor + tokens < text.size()){
             size_t i = 0;
-            while (i <= tokens){
+            while (i < tokens){
                 ++ne;
+                ++cursor;
                 i += 1;
             }
         }
         else{
             ne = text.end();
+            cursor = text.size();
         }
         buffer.insert(buffer.begin(), it, ne);
     }
@@ -88,10 +89,14 @@ public:
                 text.insert(it, ' ');
 
             }*/
-            it++;
+            //it++;
             text.insert(it, buffer.begin(), buffer.end());
             cursor += buffer.size();
-            it = text.end();
+            //size_t i = 0;
+            //while (i < buffer.size()){
+                //++it;
+                //++i;
+            //}
         }
     }
 
@@ -119,15 +124,15 @@ int main() {
     for (char c : text) {
         editor.Insert(c);
     }
-    cout << editor.GetText() << endl;
+    //cout << editor.GetText() << endl;
     // Текущее состояние редактора: `hello, world|`
     for (size_t i = 0; i < text.size() + 1; ++i) {
         editor.Left();
     }
     // Текущее состояние редактора: `|hello, world`
-    cout << editor.GetText() << endl;
+    //cout << editor.GetText() << endl;
     editor.Cut(7);
-    
+    cout << editor.GetText() << endl;
     // Текущее состояние редактора: `|world`
     // в буфере обмена находится текст `hello, `
     for (size_t i = 0; i < 5; ++i) {
